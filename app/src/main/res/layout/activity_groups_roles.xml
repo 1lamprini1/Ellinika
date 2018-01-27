@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.lamprini.ellinika.GroupsRolesActivity">
+
+    <TextView
+        android:id="@+id/uid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ListView
+        android:id="@+id/groups_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/create_group_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/groups_list"
+        android:text="@string/create_group"
+        android:onClick="createGroup" />
+
+    <Button
+        android:id="@+id/join_group_s_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/create_group_button"
+        android:text="@string/join_group_student"
+        android:onClick="joinGroupAsStudent"/>
+
+    <Button
+        android:id="@+id/join_group_t_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/create_group_button"
+        app:layout_constraintLeft_toRightOf="@id/join_group_s_button"
+        android:text="@string/join_group_teacher"
+        android:onClick="joinGroupAsTeacher"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,5 +1,8 @@
 package com.example.lamprini.ellinika.db;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,13 +10,16 @@ import java.util.List;
  * @author Lamprini Georgatsou
  */
 
-public class Exercise {
+public abstract class Exercise {
 
     private int number;
 
-    private String text;
+    protected String text;
 
-    private List<String> solutions;
+    protected List<String> solutions;
+
+    // For GSON.
+    public Exercise() { }
 
     public Exercise(String text) {
 

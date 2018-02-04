@@ -73,15 +73,15 @@ public interface GroupDao {
 //        }
 
         @TypeConverter
-        public static List<Exercise> fromExerciseString(String value) {
+        public static List<QuestionExercise> fromQuestionExerciseString(String value) {
 
-            Type listType = new TypeToken<List<Exercise>>(){}.getType();
+            Type listType = new TypeToken<List<QuestionExercise>>(){}.getType();
             return new Gson().fromJson(value, listType);
 
         }
 
         @TypeConverter
-        public static String fromExerciseList(List<Exercise> list) {
+        public static String fromQuestionExerciseList(List<QuestionExercise> list) {
 
             Gson gson = new Gson();
             return gson.toJson(list);

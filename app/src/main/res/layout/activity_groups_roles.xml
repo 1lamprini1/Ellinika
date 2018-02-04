@@ -10,36 +10,68 @@
         android:id="@+id/uid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:textSize="14sp"
+        android:textStyle="italic"
+        android:padding="10sp"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/groups_list_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="@string/groups_list_title_string"
+        android:padding="10sp"
+        app:layout_constraintTop_toBottomOf="@id/uid"/>
 
     <ListView
         android:id="@+id/groups_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/create_group_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/groups_list"
-        android:text="@string/create_group"
-        android:onClick="createGroup" />
+        app:layout_constraintTop_toBottomOf="@id/groups_list_text"/>
 
-    <Button
-        android:id="@+id/join_group_s_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/create_group_button"
-        android:text="@string/join_group_student"
-        android:onClick="joinGroupAsStudent"/>
+        android:padding="20sp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/groups_list">
+        <Button
+            android:id="@+id/create_group_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="@string/create_group"
+            android:padding="20sp"
+            android:onClick="createGroup" />
 
-    <Button
-        android:id="@+id/join_group_t_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/create_group_button"
-        app:layout_constraintLeft_toRightOf="@id/join_group_s_button"
-        android:text="@string/join_group_teacher"
-        android:onClick="joinGroupAsTeacher"/>
+        <Button
+            android:id="@+id/join_group_s_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="@string/join_group_student"
+            android:padding="20sp"
+            android:onClick="joinGroupAsStudent"/>
+
+        <Button
+            android:id="@+id/join_group_t_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="@string/join_group_teacher"
+            android:padding="20sp"
+            android:onClick="joinGroupAsTeacher"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:text="@string/logout"
+            android:onClick="logout" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

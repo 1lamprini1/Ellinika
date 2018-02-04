@@ -8,6 +8,8 @@ class IntentConstants {
 
     static final String USER_ID = "uid";
 
+    static final String USER_NAME = "userName";
+
     static final String GROUP_NAME = "groupName";
 
     static final String LESSON_TITLE = "lessonTitle";

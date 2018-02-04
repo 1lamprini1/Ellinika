@@ -19,9 +19,12 @@ import static com.example.lamprini.ellinika.IntentConstants.DO_CREATE_GROUP;
 import static com.example.lamprini.ellinika.IntentConstants.GROUP_NAME;
 import static com.example.lamprini.ellinika.IntentConstants.IS_TEACHER;
 import static com.example.lamprini.ellinika.IntentConstants.USER_ID;
+import static com.example.lamprini.ellinika.IntentConstants.USER_NAME;
 import static com.example.lamprini.ellinika.R.layout.list_groups_item;
 
 public class GroupsRolesActivity extends Activity {
+
+    // TODO : i. leave group ii. (not if only teacher)
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -31,9 +34,10 @@ public class GroupsRolesActivity extends Activity {
         setContentView(R.layout.activity_groups_roles);
 
         Integer id = this.getIntent().getIntExtra(USER_ID, -1);
+        String name = getIntent().getStringExtra(USER_NAME);
 
         TextView view = findViewById(R.id.uid);
-        view.setText(String.format("%d", id));
+        view.setText(String.format("Hello, %s.", name));
 
         DatabaseAccessor db = new DatabaseAccessor(this);
         List<String> groups;
@@ -62,6 +66,9 @@ public class GroupsRolesActivity extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed() { }
+
     public void createGroup(View view) {
 
         Intent intent = new Intent(this, NewGroupActivity.class);
@@ -87,6 +94,13 @@ public class GroupsRolesActivity extends Activity {
         intent.putExtra(DO_CREATE_GROUP, false);
         intent.putExtra(IS_TEACHER, true);
         intent.putExtras(this.getIntent());
+        startActivity(intent);
+
+    }
+
+    public void logout(View view) {
+
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
 
     }

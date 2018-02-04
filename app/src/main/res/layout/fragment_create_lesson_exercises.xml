@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.lamprini.ellinika.CreateLessonExercisesFragment"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="10sp">
+
+    <EditText
+        android:id="@+id/create_lesson_exercises_q"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/create_lesson_exercise_question" />
+
+    <EditText
+        android:id="@+id/create_lesson_exercises_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/create_lesson_exercise_answer" />
+
+</LinearLayout>

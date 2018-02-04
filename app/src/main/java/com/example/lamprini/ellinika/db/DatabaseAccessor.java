@@ -44,6 +44,13 @@ public class DatabaseAccessor {
 
     }
 
+    public boolean getGroup(String groupName) throws ExecutionException, InterruptedException {
+
+        GetGroupTask task = new GetGroupTask(db);
+        return task.execute(groupName).get() != null;
+
+    }
+
     public void joinGroupAsStudent(Integer studentId, String groupName) throws ExecutionException, InterruptedException {
 
         AddStudentToGroupTask task = new AddStudentToGroupTask(db);
@@ -79,10 +86,10 @@ public class DatabaseAccessor {
 
     }
 
-    public Lesson createLesson(String group, String title) throws ExecutionException, InterruptedException {
+    public void createLesson(Lesson lesson) throws ExecutionException, InterruptedException {
 
         CreateLessonTask task = new CreateLessonTask(db);
-        return task.execute(group, title).get();
+        task.execute(lesson).get();
 
     }
 
@@ -218,6 +225,23 @@ public class DatabaseAccessor {
 
     }
 
+    private static class GetGroupTask extends AsyncTask<String, Void, Group> {
+
+        private final AppDatabase db;
+
+        private GetGroupTask(AppDatabase db) { this.db = db; }
+
+        @Override
+        protected Group doInBackground(String... strings) {
+
+            // args: group_name
+
+            return db.groupDao().getGroupFromName(strings[0]);
+
+        }
+
+    }
+
     private static class ClearGroupsTask extends AsyncTask<Void, Void, Void> {
 
         private final AppDatabase db;
@@ -341,19 +365,19 @@ public class DatabaseAccessor {
 
     }
 
-    private static class CreateLessonTask extends AsyncTask<String, Void, Lesson> {
+    private static class CreateLessonTask extends AsyncTask<Lesson, Void, Lesson> {
 
         private final AppDatabase db;
 
         private CreateLessonTask(AppDatabase db) { this.db = db; }
 
         @Override
-        protected Lesson doInBackground(String... strings) {
+        protected Lesson doInBackground(Lesson... lessons) {
 
             // args : group_name, lesson_title
 
             // Create a new lesson under [group] and [title].
-            Lesson lesson = new Lesson(strings[0], strings[1]);
+            Lesson lesson = lessons[0];
             db.lessonDao().createLesson(lesson);
 
             return lesson;

@@ -25,7 +25,7 @@ public class Lesson {
 
     private String text;
 
-    private List<Exercise> exercises;
+    private List<QuestionExercise> exercises;
 
     private String extras;
 
@@ -40,7 +40,7 @@ public class Lesson {
     }
 
     @Ignore
-    public Lesson(@NonNull String title, String text, List<Exercise> exercises, String extras) {
+    public Lesson(@NonNull String title, String text, List<QuestionExercise> exercises, String extras) {
 
         this.title = title;
         this.text = text;
@@ -63,9 +63,9 @@ public class Lesson {
 
     public void setText(String text) { this.text = text; }
 
-    public List<Exercise> getExercises() { return exercises; }
+    public List<QuestionExercise> getExercises() { return exercises; }
 
-    public void setExercises(List<Exercise> exercises) { this.exercises = exercises; }
+    public void setExercises(List<QuestionExercise> exercises) { this.exercises = exercises; }
 
     public String getExtras() { return extras; }
 

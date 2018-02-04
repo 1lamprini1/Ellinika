@@ -23,15 +23,33 @@
     <string name="hint_password">Password</string>
     <string name="hint_name">Username</string>
     <string name="textview">TextView</string>
-    <string name="create_group">create a group</string>
-    <string name="group_name">Group name</string>
+    <string name="create_group">new group (teacher)</string>
+    <string name="group_name">Group name: </string>
+    <string name="group_name_in">enter the group name</string>
     <string name="set_name_group_error">the group must have a name!</string>
     <string name="create_group_error">Could not create group.</string>
-    <string name="create_group_text">create group</string>
+    <string name="new_group_text">new group</string>
     <string name="join_group_error">Could not join group.</string>
     <string name="title_activity_lesson">LessonActivity</string>
     <string name="create_lesson">create lesson</string>
     <string name="create_lesson_error">Only a teacher can create a lesson.</string>
     <string name="join_group_student">join a group (student)</string>
     <string name="join_group_teacher">join a group (teacher)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ok_string">ok</string>
+    <string name="create_lesson_error_text">lesson not found.</string>
+    <string name="modify_lesson_button_text">modify</string>
+    <string name="create_lesson_title_text">lesson title</string>
+    <string name="create_lesson_text_hint">write the lesson text here</string>
+    <string name="create_lesson_extras_text">enter additional information</string>
+    <string name="groups_list_title_string">Your groups:</string>
+    <string name="create_group_exists_error">Group already exists</string>
+    <string name="join_group_not_exist_error">group does not exist</string>
+    <string name="logout">logout</string>
+    <string name="cancel">cancel</string>
+    <string name="create_lesson_exercise_question">Type the question here</string>
+    <string name="create_lesson_exercise_answer">And the answer here</string>
+    <string name="error_create_lesson_empty_title">The title can\'t be empty</string>
 </resources>

@@ -15,15 +15,20 @@ import com.example.lamprini.ellinika.db.DatabaseAccessor;
 import java.util.List;
 
 import static com.example.lamprini.ellinika.IntentConstants.GROUP_NAME;
+import static com.example.lamprini.ellinika.IntentConstants.IS_TEACHER;
 import static com.example.lamprini.ellinika.IntentConstants.LESSON_TITLE;
 import static com.example.lamprini.ellinika.IntentConstants.USER_ID;
 import static com.example.lamprini.ellinika.R.layout.list_lessons_item;
 
 public class GroupLessonsActivity extends AppCompatActivity {
 
-    // TODO: add dictionary fragment
+    // TODO : delete lesson (students: only locally; teachers: also from the server)
+
+    // TODO : add dictionary fragment showing everything & w/ search.
 
     private DatabaseAccessor db = new DatabaseAccessor(this);
+
+    private String groupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +36,7 @@ public class GroupLessonsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_lessons);
 
-        String groupName = this.getIntent().getStringExtra(GROUP_NAME);
+        groupName = this.getIntent().getStringExtra(GROUP_NAME);
 
         TextView groupView = findViewById(R.id.group_name);
         groupView.setText(groupName);
@@ -49,10 +54,25 @@ public class GroupLessonsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                final String item = (String) parent.getItemAtPosition(position);
-                Intent intent = new Intent(GroupLessonsActivity.this, LessonActivity.class);
-                intent.putExtra(LESSON_TITLE, item);
-                startActivity(intent);
+            Intent intent = new Intent(GroupLessonsActivity.this, LessonActivity.class);
+
+            final String item = (String) parent.getItemAtPosition(position);
+            intent.putExtra(LESSON_TITLE, item);
+
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) intent.putExtras(extras);
+
+            boolean isTeacher;
+            Integer userId = GroupLessonsActivity.this.getIntent().getIntExtra(USER_ID, -1);
+            try {
+
+                List<String> groups = db.teacherInGroups(userId);
+                isTeacher = groups.contains(groupName);
+
+            } catch (Exception e) { isTeacher = false; }
+            intent.putExtra(IS_TEACHER, isTeacher);
+
+            startActivity(intent);
 
             }
 
@@ -63,24 +83,42 @@ public class GroupLessonsActivity extends AppCompatActivity {
     public void createLesson(View view) {
 
         Integer userId = this.getIntent().getIntExtra(USER_ID, -1);
-        boolean teacher;
+        boolean isTeacher;
         try {
 
             List<String> groups = db.teacherInGroups(userId);
-            teacher = groups.contains(String.valueOf(this.getIntent().getStringExtra(GROUP_NAME)));
+            isTeacher = groups.contains(groupName);
 
-        } catch (Exception e) { teacher = false; }
+        } catch (Exception e) { isTeacher = false; }
 
-        if (userId < 0 || !teacher) {
+        if (userId < 0 || !isTeacher) {
 
-            TextView errorText = findViewById(R.id.create_lesson_error);
-            errorText.setText(R.string.create_lesson_error);
+            showError(R.id.create_lesson_error, R.string.create_lesson_error);
             return;
 
         }
 
         Intent intent = new Intent(this, CreateLessonActivity.class);
         intent.putExtras(this.getIntent());
+        startActivity(intent);
+
+    }
+
+    private void showError(int textId, int error) {
+
+        TextView view = findViewById(textId);
+        if (view != null) {
+
+            view.setText(error);
+            view.setVisibility(View.VISIBLE);
+
+        }
+
+    }
+
+    public void logout(View view) {
+
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
 
     }

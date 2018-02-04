@@ -16,7 +16,7 @@ import static com.example.lamprini.ellinika.R.id.set_name_group;
 
 public class NewGroupActivity extends AppCompatActivity {
 
-    private DatabaseAccessor db;
+    private DatabaseAccessor db = new DatabaseAccessor(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +24,13 @@ public class NewGroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
 
-        db = new DatabaseAccessor(this);
-
     }
 
     public void createOrJoinGroup(View view) {
 
-        boolean create = this.getIntent().getBooleanExtra(DO_CREATE_GROUP, false);
+        boolean create = getIntent().getBooleanExtra(DO_CREATE_GROUP, false);
 
-        Integer id = this.getIntent().getIntExtra(USER_ID, -1);
+        Integer id = getIntent().getIntExtra(USER_ID, -1);
 
         String name = ((EditText) findViewById(set_name_group)).getText().toString();
 
@@ -47,16 +45,30 @@ public class NewGroupActivity extends AppCompatActivity {
 
         if (create) {
 
+            if (isGroup(name)) {
+
+                error.setText(R.string.create_group_exists_error);
+                return;
+
+            }
+
             try {
 
                 db.createGroup(id, name);
                 Intent intent = new Intent(this, GroupsRolesActivity.class);
-                intent.putExtras(this.getIntent());
+                intent.putExtras(getIntent());
                 startActivity(intent);
 
             } catch (Exception e) { error.setText(R.string.create_group_error); }
 
         } else {
+
+            if (!isGroup(name)) {
+
+                error.setText(R.string.join_group_not_exist_error);
+                return;
+
+            }
 
             boolean teacher = this.getIntent().getBooleanExtra(IS_TEACHER, false);
 
@@ -65,9 +77,7 @@ public class NewGroupActivity extends AppCompatActivity {
                 try {
 
                     db.joinGroupAsTeacher(id, name);
-                    Intent intent = new Intent(this, GroupsRolesActivity.class);
-                    intent.putExtras(this.getIntent());
-                    startActivity(intent);
+                    toGroupsRoles();
 
                 } catch (Exception e) { error.setText(R.string.join_group_error); }
 
@@ -76,9 +86,7 @@ public class NewGroupActivity extends AppCompatActivity {
                 try {
 
                     db.joinGroupAsStudent(id, name);
-                    Intent intent = new Intent(this, GroupsRolesActivity.class);
-                    intent.putExtras(this.getIntent());
-                    startActivity(intent);
+                    toGroupsRoles();
 
                 } catch (Exception e) { error.setText(R.string.join_group_error); }
 
@@ -86,7 +94,22 @@ public class NewGroupActivity extends AppCompatActivity {
 
         }
 
+    }
 
+    private void toGroupsRoles() {
+
+        Intent intent = new Intent(this, GroupsRolesActivity.class);
+        intent.putExtras(getIntent());
+        startActivity(intent);
+
+    }
+
+    public void cancel(View view) { toGroupsRoles(); }
+
+    private boolean isGroup(String name) {
+
+        try { return db.getGroup(name); }
+        catch (Exception e) { return false; }
 
     }
 
